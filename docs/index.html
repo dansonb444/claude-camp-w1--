@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>ClaudeCamp — Python 小脚本在线试玩</title>
+  <style>
+    :root {
+      --bg: #f4f1ec;
+      --card: #fff;
+      --ink: #1a1a1a;
+      --muted: #5c5348;
+      --accent: #2d5a4a;
+      --border: #e0d8ce;
+      --radius: 10px;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "Georgia", "Songti SC", serif;
+      background: var(--bg);
+      color: var(--ink);
+      line-height: 1.55;
+    }
+    header {
+      padding: 2.5rem 1.25rem 2rem;
+      text-align: center;
+      border-bottom: 1px solid var(--border);
+      background: linear-gradient(180deg, #fff 0%, var(--bg) 100%);
+    }
+    header h1 { font-size: 1.65rem; font-weight: 600; margin: 0 0 0.35rem; }
+    header p { margin: 0; color: var(--muted); font-size: 0.95rem; }
+    nav {
+      max-width: 720px;
+      margin: 1rem auto 0;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      justify-content: center;
+    }
+    nav a {
+      font-size: 0.8rem;
+      color: var(--accent);
+      text-decoration: none;
+      padding: 0.2rem 0.5rem;
+      border-radius: 4px;
+    }
+    nav a:hover { text-decoration: underline; }
+    main { max-width: 720px; margin: 0 auto; padding: 1.5rem 1.25rem 3rem; }
+    section {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.35rem 1.25rem;
+      margin-bottom: 1.5rem;
+      box-shadow: 0 1px 3px rgba(0,0,0,.04);
+    }
+    section h2 {
+      font-size: 1.15rem;
+      margin: 0 0 0.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    section h2 span {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 1.6rem;
+      height: 1.6rem;
+      background: var(--accent);
+      color: #fff;
+      border-radius: 50%;
+      font-size: 0.85rem;
+      font-family: system-ui, sans-serif;
+    }
+    .desc { color: var(--muted); font-size: 0.9rem; margin: 0 0 1rem; }
+    label { display: block; font-size: 0.82rem; color: var(--muted); margin: 0.65rem 0 0.25rem; }
+    input[type="text"], input[type="number"] {
+      width: 100%;
+      max-width: 280px;
+      padding: 0.45rem 0.55rem;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      font-size: 1rem;
+    }
+    .row { display: flex; flex-wrap: wrap; gap: 1rem; align-items: center; margin-top: 0.5rem; }
+    .row label { margin: 0; display: inline-flex; align-items: center; gap: 0.35rem; cursor: pointer; }
+    button {
+      margin-top: 0.85rem;
+      padding: 0.45rem 1rem;
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      font-size: 0.9rem;
+      cursor: pointer;
+      font-family: system-ui, sans-serif;
+    }
+    button:hover { filter: brightness(1.06); }
+    .out {
+      margin-top: 1rem;
+      padding: 0.75rem 0.85rem;
+      background: #f8f6f3;
+      border-radius: 6px;
+      border-left: 3px solid var(--accent);
+      font-family: ui-monospace, monospace;
+      font-size: 0.88rem;
+      white-space: pre-wrap;
+      min-height: 1.5em;
+    }
+    .out:empty::before { content: "结果会显示在这里"; color: #aaa; }
+    .tag {
+      font-size: 0.72rem;
+      font-family: system-ui, sans-serif;
+      color: var(--accent);
+      font-weight: 600;
+      letter-spacing: 0.02em;
+    }
+    footer {
+      text-align: center;
+      font-size: 0.8rem;
+      color: var(--muted);
+      padding: 1rem;
+      border-top: 1px solid var(--border);
+    }
+    footer a { color: var(--accent); }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>ClaudeCamp · Python 小脚本</h1>
+    <p>浏览器里试玩（逻辑与仓库 <code>scripts/*.py</code> 一致）· GitHub Pages</p>
+    <nav>
+      <a href="#s1">温度</a>
+      <a href="#s2">问候</a>
+      <a href="#s3">小费</a>
+      <a href="#s4">密码</a>
+      <a href="#s5">BMI</a>
+    </nav>
+  </header>
+  <main>
+    <section id="s1">
+      <h2><span>1</span> 温度转换器</h2>
+      <p class="desc">与 <code>01_temperature_converter.py</code> 相同：选择方向后换算。</p>
+      <p class="tag">Live · 试一试</p>
+      <div class="row">
+        <label><input type="radio" name="dir" value="1" checked /> 摄氏 → 华氏</label>
+        <label><input type="radio" name="dir" value="2" /> 华氏 → 摄氏</label>
+      </div>
+      <label for="temp-val">温度数值</label>
+      <input id="temp-val" type="number" step="any" placeholder="例如 25 或 77" />
+      <button type="button" id="btn-temp">换算</button>
+      <div class="out" id="out-temp"></div>
+    </section>
+
+    <section id="s2">
+      <h2><span>2</span> 个性化问候语</h2>
+      <p class="desc">与 <code>02_greeting.py</code> 相同。</p>
+      <p class="tag">Live · 试一试</p>
+      <label for="g-name">姓名</label>
+      <input id="g-name" type="text" placeholder="你的名字" />
+      <label for="g-age">年龄</label>
+      <input id="g-age" type="number" min="0" step="1" placeholder="整数" />
+      <button type="button" id="btn-greet">生成问候语</button>
+      <div class="out" id="out-greet"></div>
+    </section>
+
+    <section id="s3">
+      <h2><span>3</span> 小费计算器</h2>
+      <p class="desc">与 <code>03_tip_calculator.py</code> 相同：金额单位为 <strong>AUD</strong>，以 <strong>$</strong> 显示。</p>
+      <p class="tag">Live · 试一试</p>
+      <label for="tip-bill">餐费金额 (AUD)</label>
+      <input id="tip-bill" type="number" step="0.01" min="0" placeholder="例如 48.50" />
+      <label for="tip-rate">小费比例 (%)</label>
+      <input id="tip-rate" type="number" step="0.1" min="0" placeholder="例如 15" />
+      <button type="button" id="btn-tip">计算</button>
+      <div class="out" id="out-tip"></div>
+    </section>
+
+    <section id="s4">
+      <h2><span>4</span> 简单密码生成器</h2>
+      <p class="desc">与 <code>04_password_generator.py</code> 相同：字母 + 数字，长度 ≥ 1。</p>
+      <p class="tag">Live · 试一试</p>
+      <label for="pwd-len">密码长度</label>
+      <input id="pwd-len" type="number" min="1" max="256" value="12" />
+      <button type="button" id="btn-pwd">生成密码</button>
+      <div class="out" id="out-pwd"></div>
+    </section>
+
+    <section id="s5">
+      <h2><span>5</span> BMI 计算器</h2>
+      <p class="desc">与 <code>05_bmi_calculator.py</code> 相同：身高 <strong>米</strong>、体重 <strong>公斤</strong>；分界 18.5 / 24 / 28。</p>
+      <p class="tag">Live · 试一试</p>
+      <label for="bmi-h">身高 (米)</label>
+      <input id="bmi-h" type="number" step="0.01" min="0.1" placeholder="例如 1.75" />
+      <label for="bmi-w">体重 (公斤)</label>
+      <input id="bmi-w" type="number" step="0.1" min="1" placeholder="65" />
+      <button type="button" id="btn-bmi">计算 BMI</button>
+      <div class="out" id="out-bmi"></div>
+    </section>
+  </main>
+  <footer>
+    在仓库 <strong>Settings → Pages</strong> 中把来源设为 <strong>main</strong> 分支的 <strong>/docs</strong> 文件夹即可发布。
+    参考布局：<a href="https://markzgith.github.io/claude-camp-w1--/">Week 1 学习任务</a>
+  </footer>
+  <script>
+    function show(el, text) { el.textContent = text; }
+
+    document.getElementById("btn-temp").onclick = () => {
+      const dir = document.querySelector('input[name="dir"]:checked').value;
+      const v = parseFloat(document.getElementById("temp-val").value);
+      const out = document.getElementById("out-temp");
+      if (Number.isNaN(v)) { show(out, "请输入有效数字。"); return; }
+      if (dir === "1") {
+        const f = v * 9 / 5 + 32;
+        show(out, `${v.toFixed(2)} °C = ${f.toFixed(2)} °F`);
+      } else if (dir === "2") {
+        const c = (v - 32) * 5 / 9;
+        show(out, `${v.toFixed(2)} °F = ${c.toFixed(2)} °C`);
+      }
+    };
+
+    document.getElementById("btn-greet").onclick = () => {
+      const name = document.getElementById("g-name").value.trim();
+      const age = parseInt(document.getElementById("g-age").value, 10);
+      const out = document.getElementById("out-greet");
+      if (!name) { show(out, "请输入姓名。"); return; }
+      if (Number.isNaN(age) || age < 0) { show(out, "请输入有效年龄。"); return; }
+      show(out, `你好，${name}！\n很高兴认识你——你今年 ${age} 岁，正是充满可能性的年纪。\n愿你今天顺心、明天更好。加油！`);
+    };
+
+    document.getElementById("btn-tip").onclick = () => {
+      const bill = parseFloat(document.getElementById("tip-bill").value);
+      const rate = parseFloat(document.getElementById("tip-rate").value);
+      const out = document.getElementById("out-tip");
+      if (Number.isNaN(bill) || bill < 0) { show(out, "请输入有效餐费。"); return; }
+      if (Number.isNaN(rate) || rate < 0) { show(out, "请输入有效小费比例。"); return; }
+      const tip = bill * rate / 100;
+      const total = bill + tip;
+      show(
+        out,
+        "------------------------\n" +
+          `餐费         : $${bill.toFixed(2)}\n` +
+          `小费 (${rate}%) : $${tip.toFixed(2)}\n` +
+          `总金额       : $${total.toFixed(2)}`
+      );
+    };
+
+    function randomPassword(len) {
+      const chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+      const arr = new Uint32Array(len);
+      crypto.getRandomValues(arr);
+      let s = "";
+      for (let i = 0; i < len; i++) s += chars[arr[i] % chars.length];
+      return s;
+    }
+    document.getElementById("btn-pwd").onclick = () => {
+      const n = parseInt(document.getElementById("pwd-len").value, 10);
+      const out = document.getElementById("out-pwd");
+      if (Number.isNaN(n) || n < 1) { show(out, "长度至少为 1。"); return; }
+      show(out, "生成的密码: " + randomPassword(n));
+    };
+
+    document.getElementById("btn-bmi").onclick = () => {
+      const hM = parseFloat(document.getElementById("bmi-h").value);
+      const wKg = parseFloat(document.getElementById("bmi-w").value);
+      const out = document.getElementById("out-bmi");
+      if (Number.isNaN(hM) || hM <= 0) { show(out, "请输入有效身高（米）。"); return; }
+      if (Number.isNaN(wKg) || wKg <= 0) { show(out, "请输入有效体重（公斤）。"); return; }
+      const bmi = wKg / (hM * hM);
+      let advice;
+      if (bmi < 18.5) advice = "建议: 偏瘦，注意营养与力量训练，必要时咨询营养师。";
+      else if (bmi < 24) advice = "建议: 体重在常见健康范围内，保持均衡饮食与规律运动。";
+      else if (bmi < 28) advice = "建议: 超重趋势，可适当控制热量并增加有氧活动。";
+      else advice = "建议: 肥胖相关风险升高，建议逐步减重并咨询医生。";
+      show(out, `您的 BMI: ${bmi.toFixed(2)}\n${advice}`);
+    };
+  </script>
+</body>
+</html>
